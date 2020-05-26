@@ -9,8 +9,8 @@ AUTH0_DOMAIN = 'fsnds.auth0.com'
 ALGORITHMS = ['RS256']
 API_AUDIENCE = 'castingAgency'
 
-
 # AuthError Exception
+
 
 class AuthError(Exception):
     def __init__(self, error, status_code):
