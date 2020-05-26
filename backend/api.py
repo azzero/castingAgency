@@ -3,9 +3,8 @@ from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 # import random
-
-from .models.models import setup_db, Movie, Actor
-from .auth.auth import AuthError, requires_auth
+from database.models import setup_db, Movie, Actor
+from controllers.auth import AuthError, requires_auth
 
 
 def create_app(test_config=None):
@@ -56,8 +55,7 @@ def create_app(test_config=None):
     @requires_auth("delete:movies")
     def delete_movie(id):
         try:
-            movie = Movie.query.filter(
-                Movie.id == id).one_or_none()
+            movie = Movie.query.filter(Movie.id == id).one_or_none()
             if (movie is None):
                 abort(404)
             else:
@@ -74,8 +72,7 @@ def create_app(test_config=None):
     @requires_auth("delete:actors")
     def delete_actor(id):
         try:
-            actor = Actor.query.filter(
-                Actor.id == id).one_or_none()
+            actor = Actor.query.filter(Actor.id == id).one_or_none()
             if (actor is None):
                 abort(404)
             else:
@@ -100,7 +97,7 @@ def create_app(test_config=None):
             movie.insert()
             return jsonify({
                 "success": True,
-                "movie_added": movie.format()
+                "movie_created": movie.format()
             })
         except:
             abort(422)
@@ -119,7 +116,7 @@ def create_app(test_config=None):
             actor.insert()
             return jsonify({
                 "success": True,
-                "actor_added": actor.format()
+                "actor_created": actor.format()
             })
         except:
             abort(422)
@@ -163,7 +160,7 @@ def create_app(test_config=None):
             actor.update()
             return jsonify({
                 "success": True,
-                "updated_movie": actor.format()
+                "updated_actor": actor.format()
             })
         except:
             abort(422)
