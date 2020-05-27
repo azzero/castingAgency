@@ -52,6 +52,10 @@ The `--reload` flag will detect file changes and restart the server automaticall
 
 ## API Documentation
 
+### base URL :
+
+#### https://zizucapstone.herokuapp.com/
+
 ### GET /movies :
 
 #### - General:
