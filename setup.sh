@@ -4,5 +4,3 @@ export ALGORITHMS=['RS256']
 export API_AUDIENCE = castingAgency
 export ClIENT_ID=RMC2LXQYy6LbiiBOj6g0oWMa0DLaS9MU
 export ENV=prod
-export FLASK_APP=app.py
-flask run 
