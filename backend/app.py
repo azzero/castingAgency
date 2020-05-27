@@ -214,3 +214,8 @@ def create_app(test_config=None):
             "message": AuthError.error['description']
         }), AuthError.status_code
     return app
+
+
+app = create_app()
+if __name__ == '__main__':
+    app.run()
