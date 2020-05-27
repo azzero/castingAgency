@@ -28,7 +28,7 @@ def setup_db(app, database_path=database_path):
     migrate = Migrate(app, db)
     # db.create_all()
 
-
+# comment those lines to run db migration
 # def db_drop_and_create_all():
 #     db.drop_all()
 #     db.create_all()

@@ -43,7 +43,8 @@ class CastingAgencyTestCase(unittest.TestCase):
        actor=Actor(id=2,name='aziz',age='34',gender='female')
        actor.insert()
 
-    # POST
+    # POST : 
+    # Create Actor :
     # success behavior
     def test_create_new_actor(self):
         res=self.client().post("/actors",json={"name":"aziz","age":"34","gender":"man"} ,headers={'Authorization':'Bearer '+self.casting_director} )
@@ -58,6 +59,7 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(res.status_code,405)
         self.assertEqual(data["success"],False)
         self.assertEqual(data['message'],'method not allowed')
+    # Create Movie : 
     # success behavior 
     def test_create_new_movie(self):
         res=self.client().post("/movies",json={"title":"romana", "release_date":"09/09/2018"},headers={'Authorization':'Bearer '+self.casting_moderator})
@@ -72,7 +74,8 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(res.status_code,405)
         self.assertEqual(data["success"],False)
         self.assertEqual(data['message'],'method not allowed')
-    # GET
+    # GET 
+    # success behavior 
     # test getting all movies
     def test_getting_movies(self):
         res = self.client().get(
@@ -80,18 +83,21 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         data = json.loads(res.data)
         self.assertEqual(data['success'], True)
+    #error behavior 
     def test_405_requesting_beyond_movies_page(self):
         res=self.client().get("movies/1",headers={'Authorization':'Bearer '+self.casting_assis})
         data=json.loads(res.data)
         self.assertEqual(res.status_code,405)
         self.assertEqual(data['success'],False)
         self.assertEqual(data['message'],'method not allowed')
-    # get actors test
+    # get actors  
+    # success behavior 
     def test_get_actors(self):
         res=self.client().get("/actors",headers={'Authorization':'Bearer '+self.casting_assis})
         data=json.loads(res.data)
         self.assertEqual(res.status_code,200)
         self.assertEqual(data['success'],True)
+    #error behavior 
     def test_405_requesting_beyond_actors_page(self):
         res=self.client().get("/actors/1",headers={'Authorization':'Bearer '+self.casting_assis})
         data=json.loads(res.data)
@@ -99,58 +105,60 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(data['success'],False)
         self.assertEqual(data['message'],'method not allowed')
 
-    # PATCH 
-    # success behavior  for movie 
+    # PATCH ( update movie )
+    # success behavior  
     def test_update_movie(self):
         res=self.client().patch("/movies/1",json={"title":"bartal", "release_date":"02/02/2002"},headers={'Authorization':'Bearer '+self.casting_director})
         data=json.loads(res.data)
         self.assertEqual(res.status_code,200)
         self.assertEqual(data["success"],True)
         self.assertTrue(data["updated_movie"])
-    # error behavior for movie 
+    # error behavior 
     def test_405_update_movie_without_id(self):
         res=self.client().patch("/movies",json={"title":"bartal", "release_date":"02/02/2002"},headers={'Authorization':'Bearer '+self.casting_director})
         data=json.loads(res.data)
         self.assertEqual(res.status_code,405)
         self.assertEqual(data["success"],False)
         self.assertEqual(data['message'],'method not allowed')
-    # success behavior  for actor 
+    #update actor 
+    # success behavior 
     def test_update_actor(self):
         res=self.client().patch("/actors/1",json={"name":"brahim", "age":"45","gender":"man"},headers={'Authorization':'Bearer '+self.casting_director})
         data=json.loads(res.data)
         self.assertEqual(res.status_code,200)
         self.assertEqual(data["success"],True)
         self.assertTrue(data["updated_actor"])
-    # error behavior for actor 
+    # error behavior 
     def test_405_update_actor_without_id(self):
         res=self.client().patch("/actors",json={"title":"bartal", "release_date":"02/02/2002"},headers={'Authorization':'Bearer '+self.casting_director})
         data=json.loads(res.data)
         self.assertEqual(res.status_code,405)
         self.assertEqual(data["success"],False)
         self.assertEqual(data['message'],'method not allowed')
-    # DELETE 
-    # success behavior for movie 
+    # DELETE Movie
+    # success behavior 
     def test_delete_movie(self):
         res=self.client().delete("/movies/2",headers={'Authorization':'Bearer '+self.casting_moderator})
         data=json.loads(res.data)
         self.assertEqual(res.status_code,200)
         self.assertEqual(data["success"],True)
         self.assertTrue(data["deleted_id"])
-    # error behavior for movie
+    # error behavior 
     def test_405_delete_movie_without_id(self):
         res=self.client().delete("/movies",headers={'Authorization':'Bearer '+self.casting_moderator})
         data=json.loads(res.data)
         self.assertEqual(res.status_code,405)
         self.assertEqual(data["success"],False)
         self.assertEqual(data['message'],'method not allowed')
-        # success behavior for actor 
+    #delete actor : 
+    # success behavior 
     def test_delete_actor(self):
         res=self.client().delete("/actors/2",headers={'Authorization':'Bearer '+self.casting_director})
         data=json.loads(res.data)
         self.assertEqual(res.status_code,200)
         self.assertEqual(data["success"],True)
         self.assertTrue(data["deleted_id"])
-    # error behavior for actor
+    # error behavior 
     def test_405_delete_actor_without_id(self):
         res=self.client().delete("/actors",headers={'Authorization':'Bearer '+self.casting_director})
         data=json.loads(res.data)
@@ -159,15 +167,6 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(data['message'],'method not allowed')
     
 
-
-
-        # testing rooles 
-    # def test_401_requesting_beyond_movies_page(self):
-    #     res=self.client().get("movies")
-    #     data=json.loads(res.data)
-    #     self.assertEqual(res.status_code,401)
-    #     self.assertEqual(data['success'],False)
-    #     self.assertEqual(data['message'],'Authorization header is expected.')
     def test_401_requesting_beyond_movies_page(self):
         res=self.client().get("movies")
         data=json.loads(res.data)

@@ -2,7 +2,6 @@ import os
 from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-# import random
 from database.models import setup_db, Movie, Actor
 from controllers.auth import AuthError, requires_auth
 
@@ -101,7 +100,7 @@ def create_app(test_config=None):
             })
         except:
             abort(422)
-     # endpoint to add a actor
+     # endpoint to add an actor
 
     @app.route("/actors", methods=["POST"])
     @requires_auth("post:actors")
@@ -120,8 +119,8 @@ def create_app(test_config=None):
             })
         except:
             abort(422)
-    # endpoint to update a movie
 
+    # endpoint to update a movie
     @app.route("/movies/<int:id>", methods=["PATCH"])
     @requires_auth("patch:movies")
     def update_movie(id):
