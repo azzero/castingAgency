@@ -4,9 +4,15 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import json
 
-database_name = "casting"
-database_path = os.getenv("DATABASE_URL")
 db = SQLAlchemy()
+if os.getenv('ENV') == 'prod':
+    database_path = os.getenv('DATABASE_URL')
+
+if os.getenv('ENV') == 'dev':
+    database_name = "casting"
+    database_path = "postgres://{}/{}".format('localhost:5432', database_name)
+print(os.getenv('ENV'))
+
 
 '''
 setup_db(app)
