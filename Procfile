@@ -1,2 +1,1 @@
-heroku ps:scale web=1
-web: gunicorn app:app
+web: sh -c 'cd ./backend/ && gunicorn app:app'

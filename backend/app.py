@@ -3,8 +3,8 @@ from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 # import random
-from .database.models import setup_db, Movie, Actor
-from .controllers.auth import AuthError, requires_auth
+from database.models import setup_db, Movie, Actor
+from controllers.auth import AuthError, requires_auth
 
 
 def create_app(test_config=None):
