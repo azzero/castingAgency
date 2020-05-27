@@ -4,3 +4,4 @@ export AUTH0_DOMAIN="fsnds.auth0.com"
 export ALGORITHMS=['RS256']
 export API_AUDIENCE = 'castingAgency'
 export ClIENT_ID="RMC2LXQYy6LbiiBOj6g0oWMa0DLaS9MU"
+export ENV="dev"
